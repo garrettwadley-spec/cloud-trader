@@ -1,0 +1,29 @@
+title,body,labels,assignee,milestone,state
+[Epic] Infra bootstrap,"Set up core cloud infra for dual-system architecture (VPC, subnets, SGs, S3 bucket, GPU VM, inference VM, IAM).","epic,cloud-build,infra,Phase:Bootstrap",,Cloud Build v0,open
+Terraform skeleton,"Create Terraform modules for VPC, subnets, security groups, S3 bucket with versioning, IAM roles; parameterize instance types and region.","cloud-build,infra,terraform,Status:To Do",,,open
+Provision GPU training VM,"Spin up GPU VM with least-privilege IAM and attach role for S3 read/write; add bootstrap script for CUDA/NVIDIA drivers.","cloud-build,infra,gpu,Status:To Do",,,open
+Provision inference VM,"Create small VM for FastAPI inference + MLflow client; open port 8000 only from allowlist.","cloud-build,infra,inference,Status:To Do",,,open
+Create S3 bucket for data/models,"Bucket layout: raw/, features/, models/, backtests/, logs/; enable versioning + lifecycle rules.","cloud-build,infra,s3,Status:To Do",,,open
+IAM roles and policies,"Roles: training, inference, executor, analyst-readonly; permissions least-privilege.","cloud-build,infra,iam,Status:To Do",,,open
+[Epic] Containers and CI,"Build standardized images and CI to test and publish.","epic,cloud-build,ci,containers,Phase:Bootstrap",,Cloud Build v0,open
+Dockerfile: training,"CUDA base image; install deps (PyTorch/Sklearn, MLflow); add user; non-root.","cloud-build,containers,training,Status:To Do",,,open
+Dockerfile: inference,"Python slim + FastAPI + MLflow; healthcheck; non-root.","cloud-build,containers,inference,Status:To Do",,,open
+Dockerfile: executor,"Python slim + broker client; risk rules enforced in code; non-root.","cloud-build,containers,executor,Status:To Do",,,open
+GitHub Actions CI,"On push/PR: lint + unit tests + build images; push to registry when configured.","cloud-build,ci,Status:To Do",,,open
+[Epic] Experiment tracking,"Stand up MLflow and wire training/inference to it.","epic,cloud-build,mlflow,Phase:RnD",,Cloud Build v0,open
+MLflow server setup,"Host MLflow locally (compose) and in cloud; S3-backed artifacts; configure tracking URI secrets.","cloud-build,mlflow,Status:To Do",,,open
+Training logs to MLflow,"Ensure params, metrics, artifacts (models, plots) are logged.","cloud-build,mlflow,training,Status:To Do",,,open
+[Epic] Orchestration & CL (continuous learning),"Automate ingest → features → train → backtest → deploy with promotion gates.","epic,cloud-build,orchestration,Phase:RnD",,Cloud Build v0,open
+Prefect project skeleton,"Create flows: daily_ingest_features, train_backtest_nightly; register schedules.","cloud-build,orchestration,prefect,Status:To Do",,,open
+Promotion gates,"Sharpe>threshold, maxDD<cap, slippage stress pass; block deploy on failure.","cloud-build,orchestration,gates,Status:To Do",,,open
+Shadow trading,"Run new model in shadow alongside live; compare P&L/latency; auto-promote after N days if stable.","cloud-build,orchestration,shadow,Status:To Do",,,open
+[Epic] Executor safety rails,"Risk controls and audit logging.","epic,cloud-build,executor,Phase:Prod",,Cloud Build v0,open
+Position/Exposure limits,"Hard-coded caps per symbol; daily loss circuit breaker.","cloud-build,executor,risk,Status:To Do",,,open
+Immutable decision logs,"Log input features + model hash + order; store to S3 logs/","cloud-build,executor,logging,Status:To Do",,,open
+[Epic] Monitoring,"Metrics, dashboards, alerts.","epic,cloud-build,monitoring,Phase:Prod",,Cloud Build v0,open
+Grafana board,"Latency, inference rate, error rate, drawdown, rejects.","cloud-build,monitoring,grafana,Status:To Do",,,open
+Alerts,"Critical anomalies → email/Slack; budget alerts.","cloud-build,monitoring,alerts,Status:To Do",,,open
+[Epic] Current Trader Workflow,"Stabilize and document current on-prem/laptop trader.","epic,current-trader,Phase:Now",,Current Trader v0,open
+Map current workflow,"Document steps, scripts, credentials locations, and job timings.","current-trader,docs,Status:To Do",,,open
+Gap/overlap analysis,"Compare current trader vs cloud build; tag shared components.","current-trader,cloud-build,analysis,Status:To Do",,,open
+Backfill into cloud pipeline,"Integrate overlapping steps into Prefect flows with minimal disruption.","current-trader,cloud-build,integration,Status:To Do",,,open
