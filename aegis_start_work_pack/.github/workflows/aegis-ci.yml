@@ -1,0 +1,33 @@
+name: Aegis CI
+on: [push, pull_request]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
+      - name: Eval placeholder
+        run: |
+          python - << 'PY'
+print("Eval placeholder: add golden tests here")
+PY
+      - name: Gates check (if present)
+        run: |
+          python - << 'PY'
+import json, os, sys
+p='config/gates.json'
+if not os.path.exists(p):
+  print('No gates.json, skipping'); sys.exit(0)
+g=json.load(open(p))
+req=['sharpe_min','max_drawdown_cap']
+missing=[k for k in req if k not in g]
+if missing:
+  print('Missing gates:', missing); sys.exit(1)
+print('Gates OK')
+PY

@@ -1,0 +1,7 @@
+{
+  "host": "127.0.0.1",
+  "backtest_script": ".\\run_backtest.py",
+  "executor_python": "..\\..\\.venv\\Scripts\\python.exe",
+  "port": 8001,
+  "logs_dir": "..\\data\\backtests"
+}

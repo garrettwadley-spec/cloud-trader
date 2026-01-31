@@ -1,0 +1,29 @@
+universe:
+  symbols: [AAPL, MSFT, NVDA, META, AMZN, GOOGL, JPM, UNH, XOM, TSLA]
+  max_positions: 10
+  rebalance: daily
+
+position_sizing:
+  method: confidence_linear
+  min_weight: 0.02
+  max_weight: 0.10
+  cash_reserve: 0.10
+
+risk:
+  stop_loss_pct: 0.05
+  daily_loss_halt: -2000
+  portfolio_heat_limit: 0.60
+  cool_down_bars: 5
+
+slippage_fees:
+  model: fixed_bps
+  bps: 2
+  commission_per_share: 0.0
+
+filters:
+  earnings_blackout:
+    enabled: true
+    blackout_days: 1
+
+dashboard:
+  show_gpu_tile: true

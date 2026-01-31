@@ -1,0 +1,9 @@
+mode: paper
+max_symbols: 5
+allowed_tools:
+  - backtest.run
+  - plot.equity
+  - run_and_plot
+  - run_and_plot_save
+rate_limits:
+  backtest.run: 10/hour

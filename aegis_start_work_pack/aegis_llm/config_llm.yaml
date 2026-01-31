@@ -1,0 +1,15 @@
+llm:
+  mode: "proxy"        # "proxy" for now; later "local"
+  provider: "openai"   # later: "ollama" / "local-server"
+  model: "gpt-4.1-mini"  # or whatever you actually use in orchestrator
+  temperature: 0.2
+
+project:
+  root: "C:\\Users\\garre\\cloud-trader\\aegis_start_work_pack"
+  data_dir: "C:\\Users\\garre\\cloud-trader\\aegis_start_work_pack\\data"
+  logs_dir: "C:\\Users\\garre\\cloud-trader\\aegis_start_work_pack\\logs"
+
+assistant:
+  name: "Aegis-Local"
+  role: "Private trading/dev assistant specialized in the Aegis repo."
+  max_context_files: 10

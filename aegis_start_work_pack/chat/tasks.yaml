@@ -1,0 +1,61 @@
+
+# Whitelisted tasks the bot can execute
+tasks:
+
+  git_pull:
+    shell: false
+    cmd:
+      - "git"
+      - "-C"
+      - "C:/Users/garre/Projects/aegis"
+      - "pull"
+      - "--ff-only"
+
+  install_deps:
+    shell: false
+    cmd:
+      - "C:/Users/garre/Projects/aegis/tools/executor-bot/.venv/Scripts/python.exe"
+      - "-m"
+      - "pip"
+      - "install"
+      - "--upgrade"
+      - "uvicorn"
+      - "fastapi"
+      - "pandas"
+      - "yfinance"
+      - "prefect"
+      - "pydantic"
+      - "pyyaml"
+
+  restart_api:
+    shell: true
+    cmd:
+      - "powershell"
+      - "-NoProfile"
+      - "-ExecutionPolicy"
+      - "Bypass"
+      - "Get-NetTCPConnection -LocalPort 8001 -State Listen -ErrorAction SilentlyContinue | % { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Start-Process -WindowStyle Hidden -FilePath 'C:/Users/garre/cloud-trader/.venv/Scripts/python.exe' -ArgumentList '-m','uvicorn','backtest_server:app','--host','127.0.0.1','--port','8001','--reload' -WorkingDirectory 'C:/Users/garre/cloud-trader/aegis_start_work_pack/chat'"
+
+  tail_logs:
+    shell: true
+    cmd:
+      - "powershell"
+      - "-NoProfile"
+      - "Get-ChildItem 'C:/Users/garre/Projects/aegis/logs' -Filter *.txt | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | Get-Content -Wait"
+
+  # One-shot SPY SMA(50/200) backtest
+  run_backtest_spy_50_200:
+    shell: false
+    cmd:
+      - "C:/Users/garre/cloud-trader/.venv/Scripts/python.exe"
+      - "C:/Users/garre/cloud-trader/aegis_start_work_pack/chat/run_backtest.py"
+      - "--symbol"
+      - "SPY"
+      - "--start"
+      - "2020-01-01"
+      - "--end"
+      - "2025-11-01"
+      - "--fast"
+      - "50"
+      - "--slow"
+      - "200"
