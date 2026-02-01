@@ -1,0 +1,16 @@
+{
+  "run_id": "b105cfad5f57",
+  "name": "smoke",
+  "symbols": [
+    "SPY",
+    "AAPL"
+  ],
+  "strategies": [
+    "sma_baseline"
+  ],
+  "timeframe": "1d",
+  "start": null,
+  "end": null,
+  "note": "v0 stub complete. Next: call TOOLS['backtest.run'] per symbol/strategy and aggregate.",
+  "completed_at": "2026-01-10T03:59:50.827933"
+}
