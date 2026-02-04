@@ -28,6 +28,10 @@ Thumbs.db
 *.log
 logs/
 
+# Local run artifacts (machine-specific)
+aegis_start_work_pack/runs/
+aegis_start_work_pack/runs/*.json
+
 # Artifacts (keep runs if you want tracked—see note below)
  runs/
 data/
